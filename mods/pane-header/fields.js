@@ -17,7 +17,14 @@ const text = (v) => (typeof v === "string" && v !== "" ? v : undefined);
 /** @returns {v is Record<string, any>} */
 const isObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 
-/** A valid action, or null. Entries come from other mods, so nothing in them is trusted. */
+/**
+ * @typedef {{ command: string, args?: Record<string, any>, icon?: string, label?: string, tooltip: string, selected: boolean, gap: boolean }} Action
+ * @typedef {{ icon: string, tint: boolean }} Icon  The program table's shape, so one helper draws either.
+ * @typedef {{ title?: string, icon?: Icon, detail?: string, badge?: string, info?: string, actions: Action[] }} Fields
+ */
+
+/** A valid action, or null. Entries come from other mods, so nothing in them is trusted.
+ *  @returns {Action | null} */
 function action(a) {
   if (!isObject(a) || !text(a.command) || !(text(a.icon) || text(a.label))) return null;
   return {
@@ -38,19 +45,19 @@ function action(a) {
  * @param {unknown} entry
  * @param {Record<string, string> | null | undefined} labels
  * @param {string | null | undefined} status
+ * @returns {Fields}
  */
 export function resolve(entry, labels, status) {
   const e = isObject(entry) ? entry : {};
   const l = labels && (labels[`${LABEL}while`] !== "agent" || status != null) ? labels : {};
-  /** @type {{ title?: string, icon?: string, color: boolean, detail?: string, badge?: string, info?: string, actions: ReturnType<typeof action>[] }} */
-  const out = { color: e.color === true, actions: [] };
+  /** @type {Fields} */
+  const out = { actions: Array.isArray(e.actions) ? e.actions.map(action).filter(Boolean) : [] };
   for (const f of TEXT) {
     const v = text(e[f]) ?? text(l[LABEL + f]);
     if (v !== undefined) out[f] = v;
   }
   const icon = text(e.icon);
-  if (icon !== undefined) out.icon = icon;
-  if (Array.isArray(e.actions)) out.actions = e.actions.map(action).filter(Boolean);
+  if (icon !== undefined) out.icon = { icon, tint: e.color !== true };
   return out;
 }
 

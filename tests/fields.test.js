@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import { DRAWS, VERSION, paneFrame, resolve, tilde, withActions, withHeader } from "../mods/pane-header/fields.js";
 
 test("resolve: nothing published is no fields and no actions", () => {
-  assert.deepEqual(resolve(undefined, null, null), { color: false, actions: [] });
-  assert.deepEqual(resolve("junk", undefined, "idle"), { color: false, actions: [] });
+  assert.deepEqual(resolve(undefined, null, null), { actions: [] });
+  assert.deepEqual(resolve("junk", undefined, "idle"), { actions: [] });
 });
 
 test("resolve: the entry's fields win over the labels, field by field", () => {
@@ -16,7 +16,7 @@ test("resolve: the entry's fields win over the labels, field by field", () => {
 
 test("resolve: only pane-head.* labels count, and only the text fields", () => {
   const f = resolve(null, { "claude.info": "x", "pane-head.icon": "a.svg", "pane-head.detail": "~/src" }, null);
-  assert.deepEqual(f, { color: false, actions: [], detail: "~/src" });
+  assert.deepEqual(f, { actions: [], detail: "~/src" });
 });
 
 test("resolve: pane-head.while=agent shows the labels only while an agent reports", () => {
@@ -33,12 +33,13 @@ test("resolve: an entry's fields show whatever the labels' while says", () => {
 
 test("resolve: fields that aren't non-empty strings are left out", () => {
   const f = resolve({ title: 3, detail: "", badge: null, info: ["x"], icon: {} }, null, null);
-  assert.deepEqual(f, { color: false, actions: [] });
+  assert.deepEqual(f, { actions: [] });
 });
 
-test("resolve: icon and color come from the entry only", () => {
-  assert.deepEqual(resolve({ icon: "mods/x/i.svg", color: true }, null, null), { color: true, actions: [], icon: "mods/x/i.svg" });
-  assert.equal(resolve({ color: "yes" }, null, null).color, false);
+test("resolve: the entry's icon is tinted unless color is true", () => {
+  assert.deepEqual(resolve({ icon: "mods/x/i.svg", color: true }, null, null), { actions: [], icon: { icon: "mods/x/i.svg", tint: false } });
+  assert.deepEqual(resolve({ icon: "mods/x/i.svg", color: "yes" }, null, null).icon, { icon: "mods/x/i.svg", tint: true });
+  assert.deepEqual(resolve({ color: true }, null, null), { actions: [] });
 });
 
 test("resolve: actions keep their order; invalid ones are dropped", () => {

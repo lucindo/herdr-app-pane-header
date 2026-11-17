@@ -88,9 +88,7 @@ export default class Pane extends View {
     const labels = p.terminal ? terminals().find((x) => x.address === p.terminal)?.labels : null;
     const f = resolve(shared(HEADS_KEY)?.[pane], labels, st);
     const name = f.title ?? (((p.program?.agent || p.program?.shell) && p.program.name) || p.title || p.program?.name || "shell");
-    const pic = f.icon
-      ? f.color ? image(f.icon).w(14).h(14).flex_none() : svg(f.icon).size(14).flex_none().text_color(t.dim)
-      : icon(p.program, 14, t.dim);
+    const pic = icon(f.icon ?? p.program, 14, t.dim);
     const bottom = paneFrame(layout())?.header?.position === "bottom";
     return h_flex()
       .id(`pane-head-${pane}`)
