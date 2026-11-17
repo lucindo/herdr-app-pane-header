@@ -14,6 +14,7 @@ const LABEL = "pane-head.";
 const TEXT = ["title", "detail", "badge", "info"];
 
 const text = (v) => (typeof v === "string" && v !== "" ? v : undefined);
+/** @returns {v is Record<string, any>} */
 const isObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 
 /** A valid action, or null. Entries come from other mods, so nothing in them is trusted. */
@@ -39,7 +40,7 @@ function action(a) {
  * @param {string | null | undefined} status
  */
 export function resolve(entry, labels, status) {
-  const e = isObject(entry) ? /** @type {Record<string, any>} */ (entry) : {};
+  const e = isObject(entry) ? entry : {};
   const l = labels && (labels[`${LABEL}while`] !== "agent" || status != null) ? labels : {};
   /** @type {{ title?: string, icon?: string, color: boolean, detail?: string, badge?: string, info?: string, actions: ReturnType<typeof action>[] }} */
   const out = { color: e.color === true, actions: [] };

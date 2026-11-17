@@ -1,4 +1,3 @@
 node_modules/
 # Written by `herdr-app check` and the app for the installed app version.
 mods/*/gpui-kit.d.ts
-mods/*/herdr.d.ts
