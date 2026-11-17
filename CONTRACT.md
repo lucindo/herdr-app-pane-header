@@ -97,7 +97,8 @@ changes, so publishers check the shown layout's header themselves.
 ### Find your pane
 
 A header gets its pane id in `props()`; a mod pane doesn't. Pass your tab in the props you split
-with (`pane.split { direction, mod, props: { tab } }`), then find your pane in `panes()`:
+with (`pane.split { direction, mod, props: { tab: focused().tab } }` when splitting the focused
+pane), then find your pane in `panes()`:
 
 ```js
 const pane = panes().find((p) => p.mod === "<mod>" && p.tab === props().tab)?.pane;

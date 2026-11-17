@@ -36,9 +36,9 @@ their own buttons (the contract treats such a header as not drawing them).
 
 ## Based on Herdr's `pane`
 
-`mods/pane-header/main.js` started as a copy of Herdr's stock `pane` mod, version 0.1.16, which is
-under the Apache License 2.0 like this repo ([LICENSE](LICENSE)). The split, zoom and close icons
-are Herdr's, unchanged. What changed:
+`mods/pane-header/main.js` started as a copy of Herdr's stock `pane` mod as shipped in Herdr
+0.1.16. Herdr is under the Apache License 2.0, like this repo ([LICENSE](LICENSE)). The split, zoom
+and close icons are Herdr's, unchanged. What changed:
 
 - It draws a pane's `pane-heads` entry and its terminal's `pane-head.*` labels (`fields.js`).
 - It registers in the shared keys `pane-heads-headers` and `pane-heads-actions`.

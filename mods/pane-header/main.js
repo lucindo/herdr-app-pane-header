@@ -4,7 +4,7 @@
 // the folder, and the agent's status; buttons split, zoom and close this pane. Props from the
 // app: { pane, terminal }. Click: focus the pane.
 //
-// Based on Herdr's stock `pane` mod 0.1.16 (Apache-2.0). Changed: it draws what a pane publishes
+// Based on Herdr's stock `pane` mod as shipped in Herdr 0.1.16 (Apache-2.0). Changed: it draws what a pane publishes
 // under the pane-heads contract (CONTRACT.md): a title, icon, detail, badge, info and buttons from
 // the shared key `pane-heads`, or text from its terminal's `pane-head.*` labels; it registers
 // itself in `pane-heads-headers` and `pane-heads-actions`; the logic is in fields.js.
