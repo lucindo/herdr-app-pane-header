@@ -5,6 +5,8 @@ in. Herdr's own header, `pane`, shows each pane's program, title, folder and age
 nothing a pane can change. This one shows the same, plus whatever a pane publishes: its own
 title, icon, detail, a badge, an info text and buttons.
 
+![A shell pane with a badge and info set from labels, beside the reviewer's controls](preview.png)
+
 - A mod pane publishes through Herdr's shared state. The
   [reviewer](https://github.com/gfronza/herdr-app-reviewer) puts its scopes and toggles here.
 - A program in a terminal sets labels on its terminal:
